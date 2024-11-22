@@ -1,1 +1,2 @@
-# admin-dashboard
+# Admin Dashboard
+This project is based on a web page designed to facilitate data management.Its main objective is to centralize the information and tools necessary for the administration of a system, providing a fluid, intuitive and responsive user experience.
