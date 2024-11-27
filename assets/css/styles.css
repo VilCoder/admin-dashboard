@@ -28,7 +28,7 @@ body {
     width: 100vw;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: repeat(12, [cos-start] 1fr);
+    grid-template-columns: repeat(12, [col-start] 1fr);
     background-color: var(--color-primary);
 }
 
@@ -56,7 +56,9 @@ img {
 .header__functions,
 .aside__dashboard,
 .aside__icon,
-.trading__card-content {
+.trading__card-content,
+.header__user,
+.navbar__logo {
     display: flex;
     align-items: center;
 }
@@ -64,14 +66,6 @@ img {
 .header__block,
 .trading__block {
     display: block;
-}
-
-.announcement__container-card,
-.trading__container-card {
-    width: 95%;
-    margin-top: 0.8rem;
-    border-radius: 5px;
-    background-color: var(--color-primary);
 }
 
 .project__card-content,
@@ -83,51 +77,55 @@ img {
 
 /* ====================================== HEADER ======================================*/
 .header {
-    grid-column: cos-start 3 / -1;
-    grid-row: 1;
+    grid-column: col-start 3 / -1;
     display: grid;
     grid-template-columns: 3fr 1fr;
-    padding: 1rem 3rem;
+    padding: 1rem 3.5rem;
     box-shadow: 0 10px 10px -8px rgb(0 0 0 / 0.22);
 }
 
-
-
 .header__input {
-    width: 70%;
+    width: 100%;
     font-size: 100%;
     padding: 0.5rem;
     background-color: var(--color-tertiary);
     border: none;
     border-radius: 10px;
-    outline-color: var(--color-secondary);
-    
+    outline: none;   
 }
 
-.header__hi + .info__name-admin {
+.header__input:focus {
+    outline: 1px solid var(--color-secondary);
+}
+
+.header__info {
+    justify-content: end;
+}
+
+.header__hi + .info__user {
     font-size: 1.5rem;
 }
 
-.info__name-admin {
+.info__user {
     font-size: 1.2rem;
     font-weight: bold;
 }
 
-.info__photo-admin {
-    width: 30px;
-    height: 30px;
+.user__photo {
+    width: 35px;
+    height: 35px;
     margin-right: 1rem;
     border-radius: 50%;
     overflow: hidden;
 }
 
-.bigger {
-    width: 40px;
-    height: 40px;
+.header__user .user__photo {
+    width: 55px;
+    height: 55px;
 }
 
 .header__functions {
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .function__button {
@@ -137,7 +135,8 @@ img {
     border-radius: 20px;
     color: var(--color-primary);
     cursor: pointer;
-    transition: all 300ms linear;
+    transition: background-color 300ms linear,
+                color 300ms ease-in-out;
 }
 
 .function__button:hover {
@@ -146,49 +145,62 @@ img {
 }
 
 /* ====================================== ASIDE ======================================*/
-.asidebar {
-    grid-column: cos-start / span 2;
+.navbar {
+    grid-column: span 2;
     grid-row: 1 / 7;
     padding: 1rem 1.5rem 0;
     background-color: var(--color-secondary);
 }
 
-.aside__dashboard {
+.navbar__logo {
     margin-bottom: 3rem;
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 1.3rem;
     color: var(--color-primary);
+    letter-spacing: 1px;
 }
 
-.dashboard__icon {
+.navbar__logo svg {
     width: 30px;
     height: 30px;
-
 }
 
-.aside__icons {
-    display: flex;
-    flex-direction: column;
-    height: 37rem;
+.navbar__nav {
     font-size: 1.5rem;
     padding-left: 0.4rem;
     color: var(--color-primary);
 }
 
-.aside__icon {
-    width: 0;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.2rem;
-    border-bottom: 2px solid var(--color-primary);
-    cursor: pointer;
+.nav__ul {
+    display: flex;
+    flex-direction: column;
+    height: 29rem;
+    list-style: none;
 }
 
-.aside__icon:hover {
+.nav__link {
+    display: flex;
+    align-items: center;
+    position: relative;
     width: min-content;
+    margin-top: 1rem;
+    color: inherit;
+    text-decoration: none;
 }
 
-.aside__icon .icon{
-    margin-right: 1.5rem;
+.nav__link::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-primary);
+    transition: width 300ms ease;
+}
+
+.nav__link:hover::after {
+    width: 100%;
 }
 
 
@@ -213,7 +225,7 @@ img {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 2rem;
-    margin-top: 0.8rem;
+    margin-top: 1.5rem;
 }
 
 .project__card-content {
@@ -225,19 +237,38 @@ img {
     background-color: var(--color-primary);
     border-left: 5px solid var(--color-border);
     border-radius: 5px;
+    transition: transform 300ms linear;
+}
+
+.project__card-content:hover {
+    transform: translateY(-8px);
 }
 
 .project__card-text {
     flex-grow: 1;
     font-size: 1.1rem;
     margin-top: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     color: var(--color-text);
 }
 
 .card__icons {
     display: flex;
     justify-content: end;
+}
+
+.announcement__container-card,
+.trading__container-card {
+    width: 95%;
+    margin-top: 1.5rem;
+    border-radius: 5px;
+    background-color: var(--color-primary);
+    transition: transform 300ms linear;
+}
+
+.announcement__container-card:hover,
+.trading__container-card:hover {
+    transform: translateY(-8px);
 }
 
 .content__announcements {
@@ -273,8 +304,8 @@ img {
 }
 
 .tradind__card-img {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     margin-right: 1rem;
     border-radius: 50%;
     overflow: hidden;
